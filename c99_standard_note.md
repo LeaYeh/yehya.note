@@ -91,9 +91,15 @@ as a *pointer to a character* type.
 * `* void` , `* char` 彼此可互換的表示法
 * `* void` 的寬度取決於機器 （e.g. 64位元 -> pointer 的寬度為 64 bit
 * `* void` 沒有 data storge -> 不是 object
-* C89 前沒有 void, 如果沒有指定 return type 都會 return int
+* C89 前沒有 void, 如果沒有指定 return type 都會 return int(伴隨著 `0` 作為返回值)
   * 但是對於 compiler 來說檢查型態是很重要的問題
     * `void` 的存在讓語法分析器可以正確的運作
+  * `void *` 的設計，導致開發者必須透過 explict (顯式) 或強制轉型，才能存取最終
+的 object，否則就會丟出編譯器的錯誤訊息，從而避免危險的指標操作
+    * 無法直接對 `void *` 做數值操作(compiler 不知道確切的大小)
+    * 在 ARM 上需要額外的 alignment 指定大小
+      * e.g. `uint32_t` `uint16_t` `uint8_t`
+
 
 **const 的用途**  
 
