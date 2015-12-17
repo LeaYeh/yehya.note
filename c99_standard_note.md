@@ -95,6 +95,15 @@ as a *pointer to a character* type.
   * 但是對於 compiler 來說檢查型態是很重要的問題
     * `void` 的存在讓語法分析器可以正確的運作
 
+**const 的用途**  
+
+|          語法          |意義                              |
+|------------------------|----------------------------------|
+| `const int a;`         | 常整數                           |
+| `int const a;`         | 常整數                           |
+| `const int * a;`       | pointer 可修改; pointee 不可修改 |
+| `int const * a;`       | pointer 不可修改; pointee 可修改 |
+| `int const * a const;` | pointer & pointee 都不可修改     |
 
 
 
