@@ -75,6 +75,14 @@ location in memory (i.e. has an address).
 -----
 
 #### Pointers vs. Arrays ####
+
+* array subscripting 在**編譯時期**只能作以下兩件事:
+  * 得知 size
+  * Obtain a pointer to element 0
+* 前兩者以外的操作，都透過 pointer
+  * array subscripting => syntax sugar
+    * array subscripting: 提供操作多維陣列的機制， 但實際上只有一維陣列的資料存取
+
 * in declaration
   * extern, 如 `extern char x[];` => 不能變更為 pointer 的形式
   * definition/statement, 如 `char x[10]` => 不能變更為 pointer 的形式
