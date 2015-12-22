@@ -42,4 +42,34 @@
 
 -----
 
+**Register table**
+> in `Cortex-M3`
+
+* R0-R12 (general-purpose registers)
+  * 絕大多數 16bit Thumb 只能使用 R0-R7
+  * 32bit 的 Thumb 則可以使用所有 register
+* R13 Stack Pointer(SP)
+  * 有 MSP 和 PSP 兩種， 但是是 banked register
+    * MSP: 用於操作 kernel 和處理 exception, interrupt
+    * PSP: 於 user mode 下的 program 使用
+* R14 Link Register(lr)
+  * 當 call function 時， 由 R14 储存 return address
+    * 為了減少 access ram 的次數（time cost太高）， 如果有很多層 call func 則將 R14 存入 stack 中
+* R15 Program Counter(PC)
+  * 存放處理器要存取的下一道指令位址
+  * 在 ARM 中 PC 是儲存下 2 個指令的位址
+  * 可以藉由修改 PC 的值技巧性的控制流程
+
+
+-----
+
+**Banked Register**  
+不同的視角（mode）會看到不同組的 register -> 這樣切換 mode 會比較有效率
+e.g.  
+由 user mode 切換到 FIQ mode 時， 
+* user mode 的狀態會以 stack 的形式存起來（R0-R7）
+* (R8-R14) 則不需要， 因為對 FIQ mode 來說那些是獨立的 register  
+
+
+
 
