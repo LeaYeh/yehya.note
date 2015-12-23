@@ -28,7 +28,7 @@
     * 可以跳到的範圍有限制。  
 
     * Thumb 和 ARM 在組語上是相同的，  
-    * 但是 compile 後會產生初步同的資料，  
+    * 但是 compile 後會產生出不同的資料，  
     * 所以「Thumb 是一套 16 bits 的指令集，為 ARM 指令集的子集，可以在 32 bits 的 ARM 指令集找到對應」，  
     * Thumb mode 和 ARM mode 兩個不能同時運作，  
     * 選好後處理器就會依照指定的模式運作，  
@@ -39,6 +39,8 @@
   * Thumb2
     * Thumb2 在原本單純的 16 bits Thumb 指令集加入了一些 32 bits 的指令，
     * 也加入了 IT (If Then) 指令 (對於 ARM 指令集來說，IT 指令不會產生任何 code)。
+
+=> `Cortex-M3` only support Thumb2
 
 -----
 
@@ -60,15 +62,22 @@
   * 在 ARM 中 PC 是儲存下 2 個指令的位址
   * 可以藉由修改 PC 的值技巧性的控制流程
 
-
 -----
 
 **Banked Register**  
-不同的視角（mode）會看到不同組的 register -> 這樣切換 mode 會比較有效率
+不同的視角（mode）會看到不同組的 register -> 這樣切換 mode 會比較有效率  
 e.g.  
 由 user mode 切換到 FIQ mode 時， 
 * user mode 的狀態會以 stack 的形式存起來（R0-R7）
 * (R8-R14) 則不需要， 因為對 FIQ mode 來說那些是獨立的 register  
+
+-----
+
+**NVIC (Nested Vectored Interrupt Controller)**  
+
+
+
+
 
 
 
