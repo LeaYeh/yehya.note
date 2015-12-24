@@ -32,6 +32,7 @@ struct GraphicsObject obj;
 
 ```c 
 int a[] // is an incomplete type
+// is incomplete array exist?
 ``` 
 
 *Use an incomplete declaration in a header file whenever possible.*
