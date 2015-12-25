@@ -1,5 +1,16 @@
 ## ARM System Developer's Guide ##
 
+**Harvard architecture vs. von Neumann architecture**  
+> ARM9 開始使用哈佛架構
+* von Neumann architecture
+  * 中央處理器和儲存裝置是分開
+  * 中央處理器到儲存裝置中讀取一段程式碼執行
+  * 不同程式碼可以造成不同的執行結果
+* Harvard architecture
+  * 為馮‧紐曼架構的延伸
+  * 程式和資料是由兩個獨立的空間儲存，同時也有兩個記憶體控制單元分別操作
+  * 指令和資料的記憶體操作能夠同時進行
+
 **RISC**  
 > *prons:*  
 > 1. 指令長度固定，方便CPU解碼，簡化解碼器設計。
