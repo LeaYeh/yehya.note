@@ -85,11 +85,29 @@ e.g.
 -----
 
 **NVIC (Nested Vectored Interrupt Controller)**  
+* 每個ISR都可以獨立做啟動與關閉
+* 允許巢狀中斷，也就是中斷時，還可以被中斷
+* 當例外發生時，NVIC會比較例外的優先權
+  * 如果後來發生的exception優先權比較高，那就插隊先執行 -> preemption
+* 可以做中斷遮罩，也就是停用某些中斷
+  * PRIMASK: 可以停用所有的exception(除了最嚴重的HardFault和NMI不可以停用)
+    * 關鍵任務不可以被打斷
+  * BASEPRI: 停用某個優先權以下的例外
 
+> 負責處理Interrupt Request(IRQs)和Non-Maskable Interrupt(NVI) Request
+* IRQ
+  * 通常是週邊或外部輸入產生的
+* NMI
+  * watchdog timer: 一定時間處理器沒有回應時會主動打斷處理器
+  * brownout detector: 處理器電壓偵測，當處理器的電壓低於某個水平時會發出警告
+  * SysTick: 處理器內部的timer，會週期性的對處理器發出中斷
+> exception number 越小優先權越高  
 
+> An implementation-defined number of interrupts, in the range 1-240 interrupts
+* 通常不會使用所有 interrupt -> 較省電
+  * e.g. STM32F429 中只使用了 91 個 interrupt
 
+[info link](http://enginechang.logdown.com/posts/248297-talking-about-the-priority-from-the-arm-set-cortex-m-to-freertos)  
 
-
-
-
+-----
 
