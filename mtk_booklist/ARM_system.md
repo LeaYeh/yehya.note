@@ -19,37 +19,37 @@
 > 4. 處理器簡化，電晶體數量少，易於提升運作時脈。耗電量較低。
 
 
-* **Thumb**  
-  * Thumb
-    * ARM 有兩套指令集，  
-    * 一套是 ARM，  
-    * 另一套是 Thumb。  
+**Thumb**  
+* Thumb
+  * ARM 有兩套指令集，  
+  * 一套是 ARM，  
+  * 另一套是 Thumb。  
 
-    * **Thumb 的目地是要增加 code 的密度，**  
-    * Thumb instruction set 實作的是 ARM instruction set 的子集，  
-    * 指令用了 16 bits，  
-    * 藉由限制一些能力來換取空間。  
+  * **Thumb 的目地是要增加 code 的密度，**  
+  * Thumb instruction set 實作的是 ARM instruction set 的子集，  
+  * 指令用了 16 bits，  
+  * 藉由限制一些能力來換取空間。  
 
-    * (本來可以放 32 條 32 bits 的 ARM 指令換成放 Thumb 就可以放 64 條)  
+  * (本來可以放 32 條 32 bits 的 ARM 指令換成放 Thumb 就可以放 64 條)  
 
-    * Thumb 沒有 coprocessor 指令、Semaphore 指令、CPSR 和 SPSR 相關的指令、乘加指令、64 位元乘法指令，  
-    * 指令的第二個 operand 受到限制，  
-    * 只有 branch 指令可以跳 address，  
-    * 採用的是 relative jump，  
-    * 可以跳到的範圍有限制。  
+  * Thumb 沒有 coprocessor 指令、Semaphore 指令、CPSR 和 SPSR 相關的指令、乘加指令、64 位元乘法指令，  
+  * 指令的第二個 operand 受到限制，  
+  * 只有 branch 指令可以跳 address，  
+  * 採用的是 relative jump，  
+  * 可以跳到的範圍有限制。  
 
-    * Thumb 和 ARM 在組語上是相同的，  
-    * 但是 compile 後會產生出不同的資料，  
-    * 所以「Thumb 是一套 16 bits 的指令集，為 ARM 指令集的子集，可以在 32 bits 的 ARM 指令集找到對應」，  
-    * Thumb mode 和 ARM mode 兩個不能同時運作，  
-    * 選好後處理器就會依照指定的模式運作，  
-    * 如果是 Thumb mode 的話會進行解壓縮，  
-    * 轉換成 ARM 指令來執行。
+  * Thumb 和 ARM 在組語上是相同的，  
+  * 但是 compile 後會產生出不同的資料，  
+  * 所以「Thumb 是一套 16 bits 的指令集，為 ARM 指令集的子集，可以在 32 bits 的 ARM 指令集找到對應」，  
+  * Thumb mode 和 ARM mode 兩個不能同時運作，  
+  * 選好後處理器就會依照指定的模式運作，  
+  * 如果是 Thumb mode 的話會進行解壓縮，  
+  * 轉換成 ARM 指令來執行。
 
 
-  * Thumb2
-    * Thumb2 在原本單純的 16 bits Thumb 指令集加入了一些 32 bits 的指令，
-    * 也加入了 IT (If Then) 指令 (對於 ARM 指令集來說，IT 指令不會產生任何 code)。
+* Thumb2
+  * Thumb2 在原本單純的 16 bits Thumb 指令集加入了一些 32 bits 的指令，
+  * 也加入了 IT (If Then) 指令 (對於 ARM 指令集來說，IT 指令不會產生任何 code)。
 
 => `Cortex-M3` only support Thumb2  
 好處是增加 code 密度和保留 ARM 處理效能的同時不用兩者混合使用(會有很大的 cost, overhead)
@@ -76,22 +76,23 @@
   * 存放處理器要存取的下一道指令位址
   * 在 ARM 中 PC 是儲存下 2 個指令的位址
   * 可以藉由修改 PC 的值技巧性的控制流程
-  * PC 的 LSB 一定是 0(因為每次移動都不會改到 LSB, e.g. ), 
+  * PC 的 LSB 一定是 0(因為每次移動都不會改到 LSB), 
   * 如果更動 PC 的值就會觸發 branch(但不會更新 LR 的值)
     * 在 branch 時，無論是一般 branch 或是由更改 PC 造成的 branch，LSB 都要是 1 
 用以表明是在 Thumb 下執行(如果 LSB 是 0 則默認使用 ARM 指令集)
 * others special registers
   * Program Status Register (PSRs)
   * PRIMASK, FAULTMASK and BASEPRI
-    * PRIMASK: only one bit register, 當其被設定為 1 時可關掉所有 exception 
-(without NMI and hard fault)
-    * FAULTMASK: only one bit register, 當其被設定為 1 時可關掉所有 NMI 以外的 
-exception
+    * PRIMASK: only one bit register, 當其被設定為 1 時可關掉所有 exception (without NMI and hard fault)
+    * FAULTMASK: only one bit register, 當其被設定為 1 時可關掉所有 NMI 以外的 exception
+      * 專門給 OS 用的，用來忽略程式 crash 後噴的 faults
     * BASEPRI: 最多 9 種優先權 (e.g BASEPRI == 5, 則優先權大於 5 的都會關掉)
   * CONTROL register
   * 只能透過 MSR/MRS 指令 access
     * MRS: 將 special register 的值存到 general register
     * MSR: 將 general register 的值寫回 special register
+      * `CONTROL[0]`: 0 = privileged, 1 = user
+      * `CONTROL[1]`: 0 = MSP, 1 = PSP
 
 -----
 
