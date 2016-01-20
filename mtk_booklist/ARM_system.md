@@ -48,7 +48,7 @@
 
 
 * Thumb2
-  * Thumb2 在原本單純的 16 bits Thumb 指令集加入了一些 32 bits 的指令，
+  * Thumb2 在原本單純的 16 bits Thumb 指令集加入了一些 32 bits 的指令(為 Thumb 的 super set)，
   * 也加入了 IT (If Then) 指令 (對於 ARM 指令集來說，IT 指令不會產生任何 code)。
 
 => `Cortex-M3` only support Thumb2  
@@ -131,5 +131,21 @@ e.g.
 [info link](http://enginechang.logdown.com/posts/248297-talking-about-the-priority-from-the-arm-set-cortex-m-to-freertos)  
 
 -----
+
+**exception handle & exception vectors (CM3)**  
+
+只記錄比較重要的  
+| exception type | address |      vector       |
+|:--------------:|---------|-------------------|
+|       0        |   0x00  | MSP initial value |
+|       1        |   0x04  |  return address   | 
+
+* 處理完 exception 後噴的需要重新 init register (reset mode)，CM3 會去讀取 
+  * (0x00) MSP initial value 
+  * (0x04) PC initial value
+    * 其 LSB 必須為 1
+    * 其值為 32bits 的 address 而非指令，其指向 reset register 後第一個要執行的指令
+  * MSP 必須先被初始化，因為有可能第一條指令沒執行/完就被更高權限 interrupt (e.g. NMI)
+
 
 
