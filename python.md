@@ -33,3 +33,27 @@ module name A.B designates a submodule named B in a package named A.
 > It is a value that recall imported modules by list.  
 
 -----
+
+#### Scope ####
+
+
+
+
+-----
+
+#### Class ####
+
+## Scope
+
+* local: namespace, which is defined in function.  
+* `nonlocal`: when a namespace with a `nonlocal` prefix, means Python will search 
+nearest enclosing scope to outermost scope.
+* `global`: when a namespace with a `global` prefix, means Python will directly 
+access from global scope.
+
+
+
+
+
+
+
